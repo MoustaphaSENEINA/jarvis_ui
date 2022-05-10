@@ -1,0 +1,428 @@
+MainWidget:
+
+#:set label_size '160dp', '35dp'
+#:set button_size '80dp', '35dp'
+#:set toggle_button_size '120dp', '35dp'
+#:set border_color 0, 0, 0, 1
+#:set border_size 2
+#:set default_bg_color 69, 69, 69, 1
+
+<Pixel_attr_TextInput@TextInput>:
+	size_hint: None, None
+	size: label_size
+    font_size: '15dp'
+	multiline: False
+	halign: "center"
+	#padding_y: [self.height / 2.0 - (self.line_height / 2.0) * len(self._lines), 0]
+
+<TGlabel_ToggleButton@ToggleButton>:
+	size_hint: None, None
+	size: label_size
+
+<Generic_Button@Button>:
+	size_hint: None, None
+	size: button_size
+
+<Generic_ToggleButton@ToggleButton>:
+	size_hint: None, None
+	size: toggle_button_size
+	
+<Pixel_attr_Label@Label>:
+	size_hint: None, None
+	size: label_size
+    font_size: '15dp'
+	background_color: 220, 220, 220, 1
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 1
+        Rectangle:
+			pos: self.pos
+			size: self.size		
+
+<Page_BoxLayout@BoxLayout>:
+	canvas.before:
+		Color:
+			rgba: default_bg_color
+		Rectangle:
+			pos: self.pos
+			size: self.size
+		Color:
+			rgba: border_color
+		Line:
+			width: border_size
+			rectangle: self.x, self.y, self.width, self.height
+
+<Pixel_list_GridLayout@GridLayout>:
+	size_hint: 0.3, 1
+	cols: 1
+	spacing: "10dp"
+	padding: "10dp"
+	canvas.before:
+		Color:
+			rgba: default_bg_color
+		Rectangle:
+			pos: self.pos
+			size: self.size
+		Color:
+			rgba: border_color
+		Line:
+			width: border_size
+			rectangle: self.x, self.y, self.width, self.height
+
+<Pixel_attr_GridLayout@GridLayout>:
+	spacing: "10dp"
+	padding: "10dp"
+	cols: 2
+	canvas.before:
+		Color:
+			rgba: default_bg_color
+		Rectangle:
+			pos: self.pos
+			size: self.size
+		Color:
+			rgba: border_color
+		Line:
+			width: border_size
+			rectangle: self.x, self.y, self.width, self.height
+		
+<Header_GridLayout@GridLayout>:
+	size_hint: 1, 0.1
+	rows: 1	
+	canvas.before:
+		Color:
+			rgba: default_bg_color
+		Rectangle:
+			pos: self.pos
+			size: self.size
+		Color:
+			rgba: border_color
+		Line:
+			width: border_size
+			rectangle: self.x, self.y, self.width, self.height
+
+
+<Footer_BoxLayout@BoxLayout>:
+	orientation: "horizontal"
+	size_hint: 1, 0.1
+	spacing: "10dp"
+	padding: "10dp"	
+	canvas.before:
+		Color:
+			rgba: default_bg_color
+		Rectangle:
+			pos: self.pos
+			size: self.size
+		Color:
+			rgba: border_color
+		Line:
+			width: border_size
+			rectangle: self.x, self.y, self.width, self.height		
+
+<Footer_AnchorLayout@AnchorLayout>:
+	size_hint: 1, 0.1
+	spacing: "10dp"
+	padding: "10dp"	
+	canvas.before:
+		Color:
+			rgba: default_bg_color
+		Rectangle:
+			pos: self.pos
+			size: self.size
+		Color:
+			rgba: border_color
+		Line:
+			width: border_size
+			rectangle: self.x, self.y, self.width, self.height	
+
+<Generic_page_BoxLayout@BoxLayout>:
+	orientation: "vertical"
+	
+<Round_Checkbox@CheckBox>:
+	canvas.before:
+		Color:
+			rgb: 0,0,0
+		Ellipse:
+			pos:self.center_x-7, self.center_y-7
+			size:[14,14]
+			angle_start: 0
+			angle_end: 360
+			
+<MainWidget>:	
+	orientation: "vertical"
+	Header_GridLayout:
+		Round_Checkbox:
+			text: "FixOnTop"
+			on_state: 
+				root.always_on_top() if self.state == 'down' else root.not_always_on_top()
+		AnchorLayout:
+			Generic_Button:
+				text: "Load"
+		AnchorLayout:
+			Generic_Button: 
+				text: "PixelAct"
+				on_press: root.display_page(self, pages_layout, pixel_act_page)
+		AnchorLayout:
+			Generic_Button: 
+				text: "InputAct"
+				on_press: root.display_page(self, pages_layout, input_act_page)
+		AnchorLayout:
+			Generic_Button: 
+				text: "RunPixels"
+				on_press: root.display_page(self, pages_layout, run_pixel_page)
+		AnchorLayout:
+			Generic_Button: 
+				text: "StopPixels"
+				on_press: root.display_page(self, pages_layout, stop_pixel_page)
+		AnchorLayout:
+			Generic_Button:
+				text: "Start/Stop"
+				on_press: root.display_page(self, pages_layout, start_stop_page)
+	
+	AnchorLayout:
+		id: pages_layout
+		Generic_page_BoxLayout:
+			id: pixel_act_page
+			BoxLayout:
+				orientation: "horizontal"
+				Pixel_list_GridLayout:
+					id: pixel_act_list
+				Pixel_attr_GridLayout:
+					Pixel_attr_Label:
+						text: "Name"
+					Pixel_attr_TextInput:
+						id: pixel_act_name
+						text: root.curr_object.get("name", "")
+					Pixel_attr_Label:
+						text: "Enabled"
+					TGlabel_ToggleButton:
+						id: pixel_act_enabled
+						text: root.curr_object.get("enabled", "True")
+						on_state: 
+							self.text = "True" if self.state == 'down' else "False"
+					Pixel_attr_Label:
+						text: "On change"
+					TGlabel_ToggleButton:
+						id: pixel_act_on_change
+						text: root.curr_object.get("on_change", "True")
+						on_state: 
+							self.text = "True" if self.state == 'down' else "False"
+					Pixel_attr_Label:
+						text: "Position X"
+					Pixel_attr_Label:
+						id: pixel_act_x
+						text: root.curr_object.get("x", "")
+					Pixel_attr_Label:
+						text: "Position Y"
+					Pixel_attr_Label:
+						id: pixel_act_y
+						text: root.curr_object.get("y", "")
+					Pixel_attr_Label:
+						text: "Color"
+					Pixel_attr_Label:
+						id: pixel_act_color
+						text: root.curr_object.get("color", "")
+					Pixel_attr_Label:
+						text: "Actions"
+					Pixel_attr_TextInput:
+						id: pixel_act_actions
+						text: root.curr_object.get("actions", "")
+					Pixel_attr_Label:
+						text: "Mode"
+					TGlabel_ToggleButton:
+						id: pixel_act_action_mode
+						text: root.curr_object.get("action_mode", "all")
+						on_state: 
+							self.text = "seq" if self.state == 'down' else "all"
+					Pixel_attr_Label:
+						text: "Cool Down"
+					Pixel_attr_TextInput:
+						id: pixel_act_cool_down
+						text: root.curr_object.get("cool_down", "")
+			Footer_BoxLayout:
+				AnchorLayout:
+					Generic_Button: 
+						text: "Save"
+						on_press: root.update_pixel_act_config()
+				AnchorLayout
+					Generic_Button: 
+						text: "Delete"
+						on_press: root.delete_curr_pixel_act()
+				AnchorLayout
+					Generic_Button:
+						text: "New"
+						on_press: root.create_pixel_act()
+					
+		Generic_page_BoxLayout:
+			id: run_pixel_page
+			BoxLayout:
+				orientation: "horizontal"
+				Pixel_list_GridLayout:
+					id: run_pixel_list
+				Pixel_attr_GridLayout:
+					Pixel_attr_Label:
+						text: "Name"
+					Pixel_attr_TextInput:
+						id: run_pixel_name
+						text: root.curr_object.get("name", "")
+					Pixel_attr_Label:
+						text: "Enabled"
+					TGlabel_ToggleButton:
+						id: run_pixel_enabled
+						text: root.curr_object.get("enabled", "True")
+						on_state: 
+							self.text = "True" if self.state == 'down' else "False"
+					Pixel_attr_Label:
+						text: "Position X"
+					Pixel_attr_Label:
+						id: run_pixel_x
+						text: root.curr_object.get("x", "")
+					Pixel_attr_Label:
+						text: "Position Y"
+					Pixel_attr_Label:
+						id: run_pixel_y
+						text: root.curr_object.get("y", "")
+					Pixel_attr_Label:
+						text: "Color"
+					Pixel_attr_Label:
+						id: run_pixel_color
+						text: root.curr_object.get("color", "")
+			Footer_BoxLayout:
+				AnchorLayout:
+					Generic_Button: 
+						text: "Save"
+						on_press: root.update_run_pixel_config()
+				AnchorLayout:
+					Generic_Button: 
+						text: "Delete"
+						on_press: root.delete_curr_run_pixel()
+				AnchorLayout:
+					Generic_Button:
+						text: "New"
+						on_press: root.create_run_pixel()
+		Generic_page_BoxLayout:
+			id: stop_pixel_page
+			BoxLayout:
+				orientation: "horizontal"
+				Pixel_list_GridLayout:
+					id: stop_pixel_list
+				Pixel_attr_GridLayout:
+					Pixel_attr_Label:
+						text: "Name"
+					Pixel_attr_TextInput:
+						id: stop_pixel_name
+						text: root.curr_object.get("name", "")
+					Pixel_attr_Label:
+						text: "Enabled"
+					TGlabel_ToggleButton:
+						id: stop_pixel_enabled
+						text: root.curr_object.get("enabled", "True")
+						on_state: 
+							self.text = "True" if self.state == 'down' else "False"
+					Pixel_attr_Label:
+						text: "Position X"
+					Pixel_attr_Label:
+						id: stop_pixel_x
+						text: root.curr_object.get("x", "")
+					Pixel_attr_Label:
+						text: "Position Y"
+					Pixel_attr_Label:
+						id: stop_pixel_y
+						text: root.curr_object.get("y", "")
+					Pixel_attr_Label:
+						text: "Color"
+					Pixel_attr_Label:
+						id: stop_pixel_color
+						text: root.curr_object.get("color", "")
+					Pixel_attr_Label:
+						text: "Group"
+					Pixel_attr_TextInput:
+						id: stop_pixel_group_id
+						text: root.curr_object.get("group_id", "")
+			Footer_BoxLayout:
+				AnchorLayout:
+					Generic_Button: 
+						text: "Save"
+						on_press: root.update_stop_pixel_config()
+				AnchorLayout:
+					Generic_Button: 
+						text: "Delete"
+						on_press: root.delete_curr_stop_pixel()
+				AnchorLayout:
+					Generic_Button:
+						text: "New"
+						on_press: root.create_stop_pixel()
+
+		Generic_page_BoxLayout:
+			id: input_act_page
+			BoxLayout:
+				orientation: "horizontal"
+				Pixel_list_GridLayout:
+					id: input_act_list
+				Pixel_attr_GridLayout:
+					Pixel_attr_Label:
+						text: "Name"
+					Pixel_attr_TextInput:
+						id: input_act_name
+						text: root.curr_object.get("name", "")
+					Pixel_attr_Label:
+						text: "Enabled"
+					TGlabel_ToggleButton:
+						id: input_act_enabled
+						text: root.curr_object.get("enabled", "True")
+						on_state: 
+							self.text = "True" if self.state == 'down' else "False"
+					Pixel_attr_Label:
+						text: "Time pressed"
+					Pixel_attr_TextInput:
+						id: input_act_time_pressed
+						text: root.curr_object.get("time_pressed", "0.5")
+					Pixel_attr_Label:
+						text: "Cool down"
+					Pixel_attr_TextInput:
+						id: input_act_cool_down
+						text: root.curr_object.get("cool_down", "10")
+					Pixel_attr_Label:
+						text: "Actions"
+					Pixel_attr_TextInput:
+						id: input_act_actions
+						text: root.curr_object.get("actions", "")
+					Pixel_attr_Label:
+						text: "Mode"
+					TGlabel_ToggleButton:
+						id: input_act_action_mode
+						text: root.curr_object.get("action_mode", "all")
+						on_state: 
+							self.text = "seq" if self.state == 'down' else "all"
+					Pixel_attr_Label:
+						text: "Input key"
+					Pixel_attr_TextInput:
+						id: input_act_input
+						text: root.curr_object.get("input", "")
+
+
+			Footer_BoxLayout:
+				AnchorLayout:
+					Generic_Button: 
+						text: "Save"
+						on_press: root.update_input_act_config()
+				AnchorLayout:
+					Generic_Button: 
+						text: "Delete"
+						on_press: root.delete_curr_input_act()
+				AnchorLayout:
+					Generic_Button:
+						text: "Create"
+						on_press: root.create_input_act()
+			
+
+		Page_BoxLayout:
+			id: start_stop_page
+			orientation: "vertical"
+			TextInput:
+				text: root.logs
+			Footer_AnchorLayout:
+				Generic_ToggleButton:
+					text: "Run"
+					on_state:
+						self.text = "Stop" if self.state == 'down' else "Run"
+						root.run() if self.state == 'down' else root.stop() 

@@ -1,0 +1,8 @@
+*) mutualiser les fonction de manip des pixel / input 
+*) revoir l'histoire du pyinput qui ne marche pas avec geforce now
+*) LOGGINIGUUUU
+
+DONE:
+*) bouton fix le programe
+
+

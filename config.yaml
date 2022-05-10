@@ -1,0 +1,89 @@
+inputAct:
+- action: (
+  action_mode: all
+  actions: (
+  cool_down: 3.0
+  enabled: false
+  input: Button.left
+  last_used: 1652207495.8902614
+  name: aaa
+  time_pressed: 0.2
+pixelAct:
+- action_mode: all
+  actions: '&'
+  color:
+  - 136
+  - 35
+  - 40
+  cool_down: 3.0
+  enabled: false
+  name: life80
+  on_change: true
+  x: 112
+  y: 901
+- action_mode: all
+  actions: "\xE9"
+  color:
+  - 15
+  - 30
+  - 63
+  cool_down: 10.0
+  enabled: false
+  name: mana
+  on_change: true
+  x: 1782
+  y: 1056
+run_pixels:
+- color:
+  - 37
+  - 39
+  - 41
+  enabled: false
+  name: 28_909_[37, 39, 41]
+  x: 28
+  y: 909
+- color:
+  - 191
+  - 175
+  - 149
+  enabled: false
+  name: 1882_919_[191, 175, 149]
+  x: 1882
+  y: 919
+stop_pixels:
+- color:
+  - 74
+  - 45
+  - 15
+  enabled: false
+  group_id: menu_r
+  name: menu_r01
+  x: 1728
+  y: 31
+- color:
+  - 208
+  - 178
+  - 112
+  enabled: false
+  group_id: menu_r
+  name: menu_r02
+  x: 1432
+  y: 38
+- color:
+  - 172
+  - 150
+  - 87
+  enabled: false
+  group_id: menu_l
+  name: menu_l01
+  x: 188
+  y: 35
+- color:
+  - 126
+  - 95
+  - 45
+  enabled: false
+  group_id: menu_l
+  name: menu_l02
+  x: 481
+  y: 38
