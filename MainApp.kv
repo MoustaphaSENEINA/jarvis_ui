@@ -6,6 +6,7 @@ MainWidget:
 #:set border_color 0, 0, 0, 1
 #:set border_size 2
 #:set default_bg_color 69, 69, 69, 1
+#:set black_bg_color 0.2, 0.2, 0.2, 1
 
 <Pixel_attr_TextInput@TextInput>:
 	size_hint: None, None
@@ -48,6 +49,19 @@ MainWidget:
 			size: self.size
 		Color:
 			rgba: border_color
+		Line:
+			width: border_size
+			rectangle: self.x, self.y, self.width, self.height
+
+<Black_Page_BoxLayout@BoxLayout>:
+	canvas.before:
+		Color:
+			rgba: black_bg_color
+		Rectangle:
+			pos: self.pos
+			size: self.size
+		Color:
+			rgba: black_bg_color
 		Line:
 			width: border_size
 			rectangle: self.x, self.y, self.width, self.height
@@ -156,7 +170,8 @@ MainWidget:
 				root.always_on_top() if self.state == 'down' else root.not_always_on_top()
 		AnchorLayout:
 			Generic_Button:
-				text: "Load"
+				text: "Config"
+				on_press: root.display_page(self, pages_layout, config_choice_page)
 		AnchorLayout:
 			Generic_Button: 
 				text: "PixelAct"
@@ -238,19 +253,24 @@ MainWidget:
 					Pixel_attr_TextInput:
 						id: pixel_act_cool_down
 						text: root.curr_object.get("cool_down", "")
+					Pixel_attr_Label:
+						text: "Color margin"
+					Pixel_attr_TextInput:
+						id: pixel_act_color_margin
+						text: root.curr_object.get("color_margin", "20")
 			Footer_BoxLayout:
 				AnchorLayout:
 					Generic_Button: 
 						text: "Save"
-						on_press: root.update_pixel_act_config()
+						on_press: root.upadte_element_config("pixel_act")
 				AnchorLayout
 					Generic_Button: 
 						text: "Delete"
-						on_press: root.delete_curr_pixel_act()
+						on_press: root.delete_curr_element("pixel_act")
 				AnchorLayout
 					Generic_Button:
 						text: "New"
-						on_press: root.create_pixel_act()
+						on_press: root.request_element_creation("pixel_act")
 					
 		Generic_page_BoxLayout:
 			id: run_pixel_page
@@ -286,19 +306,24 @@ MainWidget:
 					Pixel_attr_Label:
 						id: run_pixel_color
 						text: root.curr_object.get("color", "")
+					Pixel_attr_Label:
+						text: "Color margin"
+					Pixel_attr_TextInput:
+						id: run_pixel_color_margin
+						text: root.curr_object.get("color_margin", "20")
 			Footer_BoxLayout:
 				AnchorLayout:
 					Generic_Button: 
 						text: "Save"
-						on_press: root.update_run_pixel_config()
+						on_press: root.upadte_element_config("run_pixel")
 				AnchorLayout:
 					Generic_Button: 
 						text: "Delete"
-						on_press: root.delete_curr_run_pixel()
+						on_press: root.delete_curr_element("run_pixel")
 				AnchorLayout:
 					Generic_Button:
 						text: "New"
-						on_press: root.create_run_pixel()
+						on_press: root.request_element_creation("run_pixel")
 		Generic_page_BoxLayout:
 			id: stop_pixel_page
 			BoxLayout:
@@ -338,19 +363,24 @@ MainWidget:
 					Pixel_attr_TextInput:
 						id: stop_pixel_group_id
 						text: root.curr_object.get("group_id", "")
+					Pixel_attr_Label:
+						text: "Color margin"
+					Pixel_attr_TextInput:
+						id: stop_pixel_color_margin
+						text: root.curr_object.get("color_margin", "20")
 			Footer_BoxLayout:
 				AnchorLayout:
 					Generic_Button: 
 						text: "Save"
-						on_press: root.update_stop_pixel_config()
+						on_press: root.upadte_element_config("stop_pixel")
 				AnchorLayout:
 					Generic_Button: 
 						text: "Delete"
-						on_press: root.delete_curr_stop_pixel()
+						on_press: root.delete_curr_element("stop_pixel")
 				AnchorLayout:
 					Generic_Button:
 						text: "New"
-						on_press: root.create_stop_pixel()
+						on_press: root.request_element_creation("stop_pixel")
 
 		Generic_page_BoxLayout:
 			id: input_act_page
@@ -404,15 +434,15 @@ MainWidget:
 				AnchorLayout:
 					Generic_Button: 
 						text: "Save"
-						on_press: root.update_input_act_config()
+						on_press: root.upadte_element_config("input_act")
 				AnchorLayout:
 					Generic_Button: 
 						text: "Delete"
-						on_press: root.delete_curr_input_act()
+						on_press: root.delete_curr_element("input_act")
 				AnchorLayout:
 					Generic_Button:
 						text: "Create"
-						on_press: root.create_input_act()
+						on_press: root.request_element_creation("input_act")
 			
 
 		Page_BoxLayout:
@@ -426,3 +456,22 @@ MainWidget:
 					on_state:
 						self.text = "Stop" if self.state == 'down' else "Run"
 						root.run() if self.state == 'down' else root.stop() 
+
+		Black_Page_BoxLayout:
+			id: config_choice_page
+			orientation: "vertical"
+			GridLayout:
+				cols: 1
+				padding: "5dp"
+				Pixel_attr_Label:
+					size_hint: 1, None
+					size: '0dp', '35dp'
+					text: "Current config file:"
+				Pixel_attr_Label:
+					size_hint: 1, None
+					size: '0dp', '35dp'
+					text: root.selected_file
+			Footer_AnchorLayout:
+				Generic_Button:
+					text: "Change"
+					on_press: root.load_config()

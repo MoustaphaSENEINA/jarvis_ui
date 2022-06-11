@@ -72,11 +72,12 @@ class PixelAct(act.Act):
         y = pixel['y']
         color = pixel['color']
         current_color = self.image[y, x].tolist()
+        color_margin = pixel['color_margin']
         
         self.logger.debug(f'{pixel["name"]}: {color} -> {current_color}')
         
         for i in PixelAct.index_pixel:
-            if not (-20 <= color[i] - current_color[i] <= 20):
+            if not (-color_margin <= color[i] - current_color[i] <= color_margin):
                 return True
         return False
         

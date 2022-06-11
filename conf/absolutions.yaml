@@ -1,0 +1,88 @@
+inputAct:
+- action: ''''
+  action_mode: seq
+  actions: '''('
+  cool_down: 7.2
+  enabled: false
+  input: Button.left
+  last_action: 0
+  last_used: 1654847887.403264
+  name: quick
+  time_pressed: 0.3
+- action: e
+  action_mode: all
+  actions: e
+  cool_down: 4.0
+  enabled: false
+  input: Button.left
+  last_used: 1654847886.328302
+  name: conv
+  time_pressed: 0.1
+pixelAct:
+- action: '&'
+  action_mode: seq
+  actions: '&"'
+  color:
+  - 119
+  - 34
+  - 42
+  color_margin: 20
+  cool_down: 2.0
+  enabled: false
+  last_action: 0
+  last_used: 1654847798.4467483
+  name: life_pot
+  on_change: true
+  x: 113
+  y: 891
+- action_mode: seq
+  actions: "\xE9"
+  color:
+  - 8
+  - 48
+  - 108
+  color_margin: 20
+  cool_down: 7.0
+  enabled: false
+  name: mana15%
+  on_change: true
+  x: 1793
+  y: 1038
+run_pixels:
+- color:
+  - 148
+  - 119
+  - 94
+  color_margin: 20
+  enabled: true
+  name: 1880_922_[148, 119, 94]
+  x: 1880
+  y: 922
+- color:
+  - 43
+  - 47
+  - 55
+  color_margin: 20
+  enabled: true
+  name: 1890_979_[43, 47, 55]
+  x: 1890
+  y: 979
+- color:
+  - 104
+  - 66
+  - 43
+  color_margin: 20
+  enabled: true
+  name: 23_971_[104, 66, 43]
+  x: 23
+  y: 971
+- color:
+  - 14
+  - 18
+  - 24
+  color_margin: 20
+  enabled: true
+  name: 45_1034_[14, 18, 24]
+  x: 45
+  y: 1034
+stop_pixels: []
